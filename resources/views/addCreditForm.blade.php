@@ -760,6 +760,7 @@ ul.password{
                 <div>
                     Add Credit for
                     <select name="prefixSelect" id="prefixSelect">
+                        <option value="">Please choose a prefix </option>
                         @foreach ($prefixes as $prefix):
                         <option value="{{ $prefix->prefix }}">{{ $prefix->prefix }} </option>
                         @endforeach
@@ -790,6 +791,9 @@ ul.password{
                     </li>
                         </ul>
                     </form>
+                    @if(session('success'))
+                    <h3>{{session('success')}}</h3>
+                 @endif
                 </div>
 
             </div>

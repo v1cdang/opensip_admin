@@ -10,6 +10,7 @@ class AccountsController extends Controller
     public function index()
     {
         $prefixes = DB::table('cc_card')->select('prefix')->get();
+
         return view('addCredit', ['prefixes' => $prefixes]);
     }
     public function addCreditForm($prefix)
@@ -28,7 +29,7 @@ class AccountsController extends Controller
         $current_balance = $previous_balance->credit + $credit_amount;
         DB::table('cc_card')->where('prefix', $selectedPrefix)
                            ->increment('credit',$credit_amount);
-        DB::table('account_credit_history')->insert(
+        $credit_history = DB::table('account_credit_history')->insert(
             [
                 'prefix' => $selectedPrefix,
                 'previous_balance' => $previous_balance->credit,
@@ -36,5 +37,11 @@ class AccountsController extends Controller
                 'current_balance' => $current_balance
             ]
         );
+        if($credit_history) {
+            return redirect()->back()->withSuccess('Account Credited');
+        } else {
+            // the query failed
+        }
+
     }
 }

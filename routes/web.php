@@ -20,3 +20,7 @@ Route::get('addCredit', 'AccountsController@index');
 Route::get('addCredit/{prefix}', 'AccountsController@addCreditForm');
 Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
