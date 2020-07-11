@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class AccountsController extends Controller
 {
     public function index()
     {
+        if (!Auth::check()) {
+            return route('login');
+        }
         $prefixes = DB::table('cc_card')->select('prefix')->get();
 
         return view('addCredit', ['prefixes' => $prefixes]);
