@@ -86,6 +86,7 @@
 
                 <div class="links">
                     <a href="/addCredit">Add Credit</a>
+                    <a href="/creditHistory">View Credit History</a>
 
                 </div>
             </div>

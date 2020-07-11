@@ -85,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Opensip Admin - Add Credit
+                    Opensip Admin - View Credit History
                 </div>
 
                 <div class="links">
@@ -94,7 +94,7 @@
 
                 </div>
                 <div>
-                    Add Credit for
+                    View Credit History for
                     <select name="prefixSelect" id="prefixSelect">
                         <option value="">Choose prefix</option>
                         @foreach ($prefixes as $prefix):
@@ -103,6 +103,8 @@
                     </select>
 
                 </div>
+
+
             </div>
         </div>
     </body>
@@ -112,7 +114,7 @@
       $('#prefixSelect').on('change', function () {
           var id = $(this).val(); // get selected value
           if (id) {
-              window.location = "/addCredit/"+id;
+              window.location = "/creditHistory/"+id;
           }
           return false;
       });

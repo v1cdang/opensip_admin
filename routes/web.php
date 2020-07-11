@@ -19,7 +19,8 @@ Route::get('/', function () {
 Route::get('addCredit', 'AccountsController@index');
 Route::get('addCredit/{prefix}', 'AccountsController@addCreditForm');
 Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
-
+Route::get('creditHistory', 'CreditsController@index');
+Route::get('creditHistory/{prefix}', 'CreditsController@viewPrefixCreditHistory');
 
 Auth::routes();
 
