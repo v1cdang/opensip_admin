@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('addCredit', 'AccountsController@index');
+Route::get('addCredit', 'AccountsController@index')->middleware('auth');
 Route::get('addCredit/{prefix}', 'AccountsController@addCreditForm');
 Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
 Route::get('creditHistory', 'CreditsController@index');
