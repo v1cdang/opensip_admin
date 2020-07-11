@@ -14,11 +14,14 @@ class CreditsController extends Controller
         return view('creditHistory', ['prefixes' => $prefixes]);
     }
 
-    public function viewPrefixCreditHistory(Request $request)
+    public function viewPrefixCreditHistory($prefix)
     {
+        DB::enableQueryLog();
         $prefixes = DB::table('cc_card')->select('prefix')->get();
-        $selectedPrefix = $request->input('selectedPrefix');
-        $credit_history = DB::table('account_credit_history')->get();
+        $credit_history = DB::table('account_credit_history')->where('prefix',$prefix)->get();
+//      $query = DB::getQueryLog();
+
+
         return view('prefixCreditHistory', ['credit_history' => $credit_history, 'prefixes' => $prefixes]);
     }
 
