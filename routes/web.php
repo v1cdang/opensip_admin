@@ -21,7 +21,7 @@ Route::get('addCredit/{prefix}', 'AccountsController@addCreditForm');
 Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
 Route::get('creditHistory', 'CreditsController@index');
 Route::get('creditHistory/{prefix}', 'CreditsController@viewPrefixCreditHistory');
-Route::get('getCallerIds/{prefix}/{ipaddress}', 'CalleridController@index');
+Route::get('getCallerIds/{prefix}/{phonenumber}/{ipaddress}', 'CalleridController@index');
 
 Auth::routes();
 
