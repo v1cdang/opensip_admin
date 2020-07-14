@@ -25,11 +25,15 @@ class CalleridController extends Controller
             $available_callerids['UT'] = '18016566113';
             $npanxx = substr($phonenumber, 1, 6);
             $state = DB::table('npanxx')->select('stateISO')->where(['npanxx'=>$npanxx])->first();
-            $callerid = $available_callerids[$state->stateISO];
-            if ($callerid!='')
-                echo $callerid;
-            else
+            if (array_key_exists($state->stateISO, $available_callerids)) {
+                $callerid = $available_callerids[$state->stateISO];
+                if ($callerid!='')
+                    echo $callerid;
+                else
+                    echo '13236419245';
+            } else {
                 echo '13236419245';
+            }
         } else {
             $callerids = DB::table('callerids')->select('callerid')->where(['prefix'=>$prefix, 'ip'=>$ipaddress])->inRandomOrder()->get();
             echo $callerids[0]->callerid;
