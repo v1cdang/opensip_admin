@@ -21,7 +21,7 @@ class RoutesController extends Controller
         $countryPhone = $phone->getCountry();
         //echo $countryPhone;
         $allowed_country = DB::table('customer_allowed_countries')->select('country')->where(['prefix' => $clientPrefix,'country' => $countryPhone])->first();
-        if ($allowed_country->isEmpty()) {
+        if (is_null($allowed_country)) {
             echo "NOT ALLOWED";
         } else {
             echo "ALLOWED";
