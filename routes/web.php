@@ -22,7 +22,7 @@ Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
 Route::get('creditHistory', 'CreditsController@index');
 Route::get('creditHistory/{prefix}', 'CreditsController@viewPrefixCreditHistory');
 Route::get('getCallerIds/{prefix}/{phonenumber}/{ipaddress}', 'CalleridController@index');
-
+Route::get('checkRoutes/{prefix}/{phonenumber}', 'RoutesController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
