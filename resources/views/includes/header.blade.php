@@ -6,6 +6,7 @@
         <div class="links">
             <a href="/addCredit">Add Credit</a>
             <a href="/creditHistory">View Credit History</a>
+            <a href="/setAllowedCountries">Set Allowed country</a>
         </div>
     </div>
 </div>

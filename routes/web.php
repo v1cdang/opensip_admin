@@ -23,6 +23,10 @@ Route::get('creditHistory', 'CreditsController@index');
 Route::get('creditHistory/{prefix}', 'CreditsController@viewPrefixCreditHistory');
 Route::get('getCallerIds/{prefix}/{phonenumber}/{ipaddress}', 'CalleridController@index');
 Route::get('checkRoutes/{prefix}/{phonenumber}', 'RoutesController@index');
+Route::get('setAllowedCountries', 'CustomerController@index');
+Route::get('setAllowedCountries/{prefix}', 'CustomerController@showAllowedCountriesForm');
+Route::post('setAllowedCountriesSubmit','CustomerController@setAllowedCountries');
+Route::get('checkLRN/{prefix}/{phonenumber}','LrnController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
