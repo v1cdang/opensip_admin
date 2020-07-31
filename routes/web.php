@@ -27,6 +27,9 @@ Route::get('setAllowedCountries', 'CustomerController@index');
 Route::get('setAllowedCountries/{prefix}', 'CustomerController@showAllowedCountriesForm');
 Route::post('setAllowedCountriesSubmit','CustomerController@setAllowedCountries');
 Route::get('checkLRN/{prefix}/{phonenumber}','LrnController@index');
+Route::get('setCustomerRatesForm', 'CustomerController@setCustomerRatesForm');
+Route::post('setCustomerRates', 'CustomerController@setCustomerRates');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

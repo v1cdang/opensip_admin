@@ -41,4 +41,27 @@ class CustomerController extends Controller
         }
         return redirect()->back()->withSuccess('$selectedPrefix account updated');
     }
+
+    public function setCustomerRatesForm()
+    {
+        $prefixes = DB::table('cc_card')->select('prefix')->get();
+
+        return view('setCustomerRatesForm', ['prefixes' => $prefixes]);
+    }
+
+    public function setCustomerRates(Request $request)
+    {
+        $customer_rate = DB::table('customer_rates')->insert(
+            [
+                'prefix' => $request->input('prefix'),
+                'code' => $request->input('code'),
+                'rate' => $request->input('rate')
+            ]
+        );
+        if($customer_rate) {
+            return redirect()->back()->withSuccess('Customer rate added');
+        } else {
+            // the query failed
+        }
+    }
 }
