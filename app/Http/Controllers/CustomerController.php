@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class CustomerController extends Controller
@@ -87,75 +88,13 @@ class CustomerController extends Controller
         $callerid = $request->input('name')." <".$request->input('outboundcid').">";
         $secret = $request->input('secret');
 
-        $dataUser = [
-            [
-                'extension'=>$account,
-                'password'=>'',
-                'name'=>$request->input('name'),
-                'voicemail'=>'novm',
-                'ringtimer'=>'0',
-                'noanswer'=>'',
-                'recording'=>'',
-                'outboundcid'=>$callerid,
-                'sipname'=>'',
-                'noanswer_cid'=>'',
-                'busy_cid'=>'',
-                'chanunavail_cid'=>'',
-                'noanswer_dest'=>'',
-                'busy_dest'=>'',
-                'chanunavail_dest'=>'',
-                'mohclass'=>'default'
-            ]
-        ];
+        //action,extension,name,cid_masquerade,sipname,outboundcid,ringtimer,callwaiting,call_screen,pinless,password,emergency_cid,tech,hardware,devinfo_channel,devinfo_secret,devinfo_notransfer,devinfo_dtmfmode,devinfo_canreinvite,devinfo_context,devinfo_immediate,devinfo_signalling,devinfo_echocancel,devinfo_echocancelwhenbrdiged,devinfo_echotraining,devinfo_busydetect,devinfo_busycount,devinfo_callprogress,devinfo_host,devinfo_type,devinfo_nat,devinfo_port,devinfo_qualify,devinfo_callgroup,devinfo_pickupgroup,devinfo_disallow,devinfo_allow,devinfo_dial,devinfo_accountcode,devinfo_mailbox,devinfo_deny,devinfo_permit,devicetype,deviceid,deviceuser,description,dictenabled,dictformat,dictemail,langcode,record_in,record_out,vm,vmpwd,email,pager,attach,saycid,envelope,delete,options,vmcontext,vmx_state,vmx_unavail_enabled,vmx_busy_enabled,vmx_play_instructions,vmx_option_0_sytem_default,vmx_option_0_number,vmx_option_1_system_default,vmx_option_1_number,vmx_option_2_number,account,ddial,pre_ring,strategy,grptime,grplist,annmsg_id,ringing,grppre,dring,needsconf,remotealert_id,toolate_id,postdest,faxenabled,faxemail
 
-        $data = [
-            ['id' => $account, 'keyword' => 'account', 'data' => $account, 'flags' => '43'],
-            ['id' => $account, 'keyword' => 'accountcode','data' => '', 'flags' => '21'],
-            ['id' => $account, 'keyword' => 'aggregate_mwi','data' => 'yes', 'flags' => '28'],
-            ['id' => $account, 'keyword' => 'allow','data' => '', 'flags' => '18'],
-            ['id' => $account, 'keyword' => 'avpf','data' => 'no', 'flags' => '12'],
-            ['id' => $account, 'keyword' => 'bundle','data' => 'no', 'flags' => '29'],
-            ['id' => $account, 'keyword' => 'callerid','data' => $callerid, 'flags' => '44'],
-            ['id' => $account, 'keyword' => 'context','data' => 'from-internal', 'flags' => '4'],
-            ['id' => $account, 'keyword' => 'defaultuser','data' => '', 'flags' => '5'],
-            ['id' => $account, 'keyword' => 'device_state_busy_at','data' => '0', 'flags' => '36'],
-            ['id' => $account, 'keyword' => 'dial','data' => 'PJSIP/' . $account, 'flags' => '19'],
-            ['id' => $account, 'keyword' => 'direct_media','data' => 'yes', 'flags' => '34'],
-            ['id' => $account, 'keyword' => 'disallow','data' => '', 'flags' => '17'],
-            ['id' => $account, 'keyword' => 'dtmfmode','data' => 'rfc4733', 'flags' => '3'],
-            ['id' => $account, 'keyword' => 'force_rport','data' => 'yes', 'flags' => '26'],
-            ['id' => $account, 'keyword' => 'icesupport','data' => 'no', 'flags' => '13'],
-            ['id' => $account, 'keyword' => 'mailbox','data' => $account.'@device', 'flags' => '20'],
-            ['id' => $account, 'keyword' => 'match','data' => '', 'flags' => '37'],
-            ['id' => $account, 'keyword' => 'max_audio_streams','data' => '1', 'flags' => '30'],
-            ['id' => $account, 'keyword' => 'max_contacts','data' => '1', 'flags' => '22'],
-            ['id' => $account, 'keyword' => 'max_video_streams','data' => '1', 'flags' => '31'],
-            ['id' => $account, 'keyword' => 'maximum_expiration','data' => '7200', 'flags' => '38'],
-            ['id' => $account, 'keyword' => 'media_encryption','data' => 'no', 'flags' => '32'],
-            ['id' => $account, 'keyword' => 'media_encryption_optimistic','data' => 'no', 'flags' => '35'],
-            ['id' => $account, 'keyword' => 'media_use_received_transport','data' => 'yes', 'flags' => '23'],
-            ['id' => $account, 'keyword' => 'minimum_expiration','data' => '60', 'flags' => '39'],
-            ['id' => $account, 'keyword' => 'mwi_subscription','data' => 'auto', 'flags' => '27'],
-            ['id' => $account, 'keyword' => 'namedcallgroup','data' => '', 'flags' => '15'],
-            ['id' => $account, 'keyword' => 'namedpickupgroup','data' => '', 'flags' => '16'],
-            ['id' => $account, 'keyword' => 'outbound_proxy','data' => '', 'flags' => '40'],
-            ['id' => $account, 'keyword' => 'qualifyfreq','data' => '60', 'flags' => '10'],
-            ['id' => $account, 'keyword' => 'rewrite_contact','data' => 'yes', 'flags' => '25'],
-            ['id' => $account, 'keyword' => 'rtcp_mux','data' => 'no', 'flags' => '14'],
-            ['id' => $account, 'keyword' => 'rtp_symmetric','data' =>'yes', 'flags' => '24'],
-            ['id' => $account, 'keyword' => 'secret','data' => $secret, 'flags' => '2'],
-            ['id' => $account, 'keyword' => 'secret_origional','data' => $secret, 'flags' => '41'],
-            ['id' => $account, 'keyword' => 'send_connected_line','data' => 'yes', 'flags' => '7'],
-            ['id' => $account, 'keyword' => 'sendrpid','data' => 'pai', 'flags' => '9'],
-            ['id' => $account, 'keyword' => 'sipdriver','data' => 'chan_pjsip', 'flags' => '42'],
-            ['id' => $account, 'keyword' => 'timers','data' => 'yes', 'flags' => '33'],
-            ['id' => $account, 'keyword' => 'transport','data' => '', 'flags' => '11'],
-            ['id' => $account, 'keyword' => 'trustrpid','data' => 'yes', 'flags' => '6'],
-            ['id' => $account, 'keyword' => 'user_eq_phone','data' => 'yes', 'flags' => '8']
-        ];
-        DB::connection('mysql2')->table('users')->insert($dataUser);
-        DB::connection('mysql2')->table('sip')->insert($data);
 
+        $csv = "add,$account,$account,$account,,,0,enabled,0,,,,pjsip,,,$secret,,rfc2833,no,from-internal,,,,,,,,,dynamic,friend,yes,5060,yes,,,,,PJSIP/$account,,$account@device,0.0.0.0/0.0.0.0,0.0.0.0/0.0.0.0,fixed,,$account,$account,disabled,ogg,,,Adhoc,Adhoc,enabled,1234,j.doe@foo.bar,j.doe.pager@foo.bar,attach=no,saycid=no,envelope=no,delete=no,,default,,,,,checked,,,,,$account,CHECKED,0,ringallv2,20,$account-552244,2,Ring,TEST,,CHECKED,0,0,\"ext-local,vmu552244,1\",,";
+        Storage::put('extensions.csv',$csv);
+        $connection = ssh2_connect('104.237.1.167', 22);
+        ssh2_scp_send($connection, '/var/www/html/opensip_admin/storage/app/extensions.csv', '/root/extensions.csv', 0644);
 
     }
 }
