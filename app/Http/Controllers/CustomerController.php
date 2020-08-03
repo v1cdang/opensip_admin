@@ -87,6 +87,27 @@ class CustomerController extends Controller
         $callerid = $request->input('name')." <".$request->input('outboundcid').">";
         $secret = $request->input('secret');
 
+        $dataUser = [
+            [
+                'extension'=>$account,
+                'password'=>'',
+                'name'=>$request->input('name'),
+                'voicemail'=>'novm',
+                'ringtimer'=>'0',
+                'noanswer'=>'',
+                'recording'=>'',
+                'outboundcid'=>$callerid,
+                'sipname'=>'',
+                'noanswer_cid'=>'',
+                'busy_cid'=>'',
+                'chanunavail_cid'=>'',
+                'noanswer_dest'=>'',
+                'busy_dest'=>'',
+                'chanunavail_dest'=>'',
+                'mohclass'=>'default'
+            ]
+        ];
+
         $data = [
             ['id' => $account, 'keyword' => 'account', 'data' => $account, 'flags' => '43'],
             ['id' => $account, 'keyword' => 'accountcode','data' => '', 'flags' => '21'],
@@ -132,7 +153,9 @@ class CustomerController extends Controller
             ['id' => $account, 'keyword' => 'trustrpid','data' => 'yes', 'flags' => '6'],
             ['id' => $account, 'keyword' => 'user_eq_phone','data' => 'yes', 'flags' => '8']
         ];
-
+        DB::connection('mysql2')->table('users')->insert($dataUser);
         DB::connection('mysql2')->table('sip')->insert($data);
+
+
     }
 }
