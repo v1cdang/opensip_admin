@@ -87,8 +87,7 @@ class CustomerController extends Controller
         $callerid = $request->input('name')." <".$request->input('outboundcid').">";
         $secret = $request->input('secret');
 
-        DB::connection('mysql2')->table('sip')->insert(
-
+        $data = [
             ['id' => $account, 'keyword' => 'account', 'data' => $account, 'flags' => '43'],
             ['id' => $account, 'keyword' => 'accountcode','data' => '', 'flags' => '21'],
             ['id' => $account, 'keyword' => 'aggregate_mwi','data' => 'yes', 'flags' => '28'],
@@ -132,6 +131,8 @@ class CustomerController extends Controller
             ['id' => $account, 'keyword' => 'transport','data' => '', 'flags' => '11'],
             ['id' => $account, 'keyword' => 'trustrpid','data' => 'yes', 'flags' => '6'],
             ['id' => $account, 'keyword' => 'user_eq_phone','data' => 'yes', 'flags' => '8']
-        );
+        ];
+
+        DB::connection('mysql2')->table('sip')->insert($data);
     }
 }
