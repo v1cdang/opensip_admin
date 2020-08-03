@@ -121,7 +121,7 @@ class CustomerController extends Controller
             ['id' => $account, 'keyword' => 'qualifyfreq','data' => '60', 'flags' => '10'],
             ['id' => $account, 'keyword' => 'rewrite_contact','data' => 'yes', 'flags' => '25'],
             ['id' => $account, 'keyword' => 'rtcp_mux','data' => 'no', 'flags' => '14'],
-            ['id' => $account, 'keyword' => 'rtp_symmetric','yes', 'flags' => '24'],
+            ['id' => $account, 'keyword' => 'rtp_symmetric','data' =>'yes', 'flags' => '24'],
             ['id' => $account, 'keyword' => 'secret','data' => $secret, 'flags' => '2'],
             ['id' => $account, 'keyword' => 'secret_origional','data' => $secret, 'flags' => '41'],
             ['id' => $account, 'keyword' => 'send_connected_line','data' => 'yes', 'flags' => '7'],
