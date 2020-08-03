@@ -29,6 +29,8 @@ Route::post('setAllowedCountriesSubmit','CustomerController@setAllowedCountries'
 Route::get('checkLRN/{prefix}/{phonenumber}','LrnController@index');
 Route::get('setCustomerRatesForm', 'CustomerController@setCustomerRatesForm');
 Route::post('setCustomerRates', 'CustomerController@setCustomerRates');
+Route::get('addExtensionForm', 'CustomerController@addExtensionForm');
+Route::post('addExtension', 'CustomerController@addExtension');
 
 Auth::routes();
 
