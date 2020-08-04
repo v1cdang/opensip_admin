@@ -94,8 +94,9 @@ class CustomerController extends Controller
         $csv = "add,$account,$account,$account,,,0,enabled,0,,,,pjsip,,,$secret,,rfc2833,no,from-internal,,,,,,,,,dynamic,friend,yes,5060,yes,,,,,PJSIP/$account,,$account@device,0.0.0.0/0.0.0.0,0.0.0.0/0.0.0.0,fixed,,$account,$account,disabled,ogg,,,Adhoc,Adhoc,enabled,1234,j.doe@foo.bar,j.doe.pager@foo.bar,attach=no,saycid=no,envelope=no,delete=no,,default,,,,,checked,,,,,$account,CHECKED,0,ringallv2,20,$account-552244,2,Ring,TEST,,CHECKED,0,0,\"ext-local,vmu552244,1\",,";
         Storage::put('extensions.csv',$csv);
         $connection = ssh2_connect('104.237.1.167', 22);
-        ssh2_auth_pubkey_file($connection, 'root', 'storage/app/.ssh/id_rsa.pub', 'storage/app/.ssh/id_rsa','');
-        ssh2_scp_send($connection, '/var/www/html/opensip_admin/storage/app/extensions.csv', '/root/extensions.csv', 0644);
+        if (ssh2_auth_password($connection, 'root', '0*6x7V6T?Z5hqQh')) {
+            ssh2_scp_send($connection, '/var/www/html/opensip_admin/storage/app/extensions.csv', '/root/extensions.csv', 0644);
+        }
 
     }
 }
