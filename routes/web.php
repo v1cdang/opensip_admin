@@ -22,13 +22,19 @@ Route::post('addCreditforPrefix', 'AccountsController@updateCredit');
 Route::get('creditHistory', 'CreditsController@index');
 Route::get('creditHistory/{prefix}', 'CreditsController@viewPrefixCreditHistory');
 Route::get('getCallerIds/{prefix}/{phonenumber}/{ipaddress}', 'CalleridController@index');
+
 Route::get('checkRoutes/{prefix}/{phonenumber}', 'RoutesController@index');
+Route::get('getCountry/{phonenumber}', 'RoutesController@getCountry');
+
 Route::get('setAllowedCountries', 'CustomerController@index');
 Route::get('setAllowedCountries/{prefix}', 'CustomerController@showAllowedCountriesForm');
 Route::post('setAllowedCountriesSubmit','CustomerController@setAllowedCountries');
 Route::get('checkLRN/{prefix}/{phonenumber}','LrnController@index');
+
+Route::get('addCustomerForm', 'CustomerController@addCustomerForm');
 Route::get('setCustomerRatesForm', 'CustomerController@setCustomerRatesForm');
 Route::post('setCustomerRates', 'CustomerController@setCustomerRates');
+
 Route::get('addExtensionForm', 'CustomerController@addExtensionForm');
 Route::post('addExtension', 'CustomerController@addExtension');
 

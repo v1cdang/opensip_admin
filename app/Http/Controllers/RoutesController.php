@@ -28,4 +28,11 @@ class RoutesController extends Controller
         }
     }
 
+    public function getCountry(Request $request, $phonenumber)
+    {
+        $phone = new PhoneNumber('+'.$phonenumber);
+        $countryPhone = $phone->getCountry();
+        echo $countryPhone;
+    }
+
 }

@@ -20,6 +20,26 @@ class CustomerController extends Controller
         return view('customerAllowedCountriesForm', ['prefixes' => $prefixes]);
     }
 
+    private function getNewPrefix()
+    {
+        $notfound = false;
+        while(!$notfound) {
+            $newPrefix = rand(1000,9999);
+            $prefix_available = DB::table('cc_card')->select('prefix')->where('prefix',$newPrefix)->first();
+            if (!$prefix_available) {
+                $notfound=true;
+                break;
+            }
+        }
+        return $newPrefix;
+    }
+
+    public function addCustomerForm()
+    {
+        $newPrefix = $this->getNewPrefix();
+        return view('addCustomerForm', ['newPrefix' => $newPrefix]);
+    }
+
     public function showAllowedCountriesForm($prefix)
     {
         $prefixes = DB::table('cc_card')->select('prefix')->get();
@@ -91,7 +111,7 @@ class CustomerController extends Controller
         $csv = "extension,password,name,voicemail,ringtimer,noanswer,recording,outboundcid,sipname,noanswer_cid,busy_cid,chanunavail_cid,noanswer_dest,busy_dest,chanunavail_dest,mohclass,id,tech,dial,devicetype,user,description,emergency_cid,hint_override,recording_in_external,recording_out_external,recording_in_internal,recording_out_internal,recording_ondemand,recording_priority,answermode,intercom,cid_masquerade,concurrency_limit,accountcode,aggregate_mwi,allow,avpf,bundle,callerid,context,defaultuser,device_state_busy_at,direct_media,disallow,dtmfmode,force_rport,icesupport,mailbox,match,max_audio_streams,max_contacts,max_video_streams,maximum_expiration,media_encryption,media_encryption_optimistic,media_use_received_transport,minimum_expiration,mwi_subscription,namedcallgroup,namedpickupgroup,outbound_proxy,qualifyfreq,rewrite_contact,rtcp_mux,rtp_symmetric,secret,send_connected_line,sendrpid,sipdriver,timers,transport,trustrpid,user_eq_phone,canreinvite,deny,encryption,force_avp,host,nat,permit,port,qualify,sessiontimers,type,videosupport,callwaiting_enable,findmefollow_strategy,findmefollow_grptime,findmefollow_grppre,findmefollow_grplist,findmefollow_annmsg_id,findmefollow_postdest,findmefollow_dring,findmefollow_needsconf,findmefollow_remotealert_id,findmefollow_toolate_id,findmefollow_ringing,findmefollow_pre_ring,findmefollow_voicemail,findmefollow_calendar_id,findmefollow_calendar_match,findmefollow_changecid,findmefollow_fixedcid,findmefollow_enabled,voicemail_enable,voicemail_vmpwd,voicemail_email,voicemail_pager,voicemail_options,voicemail_same_exten,disable_star_voicemail,vmx_unavail_enabled,vmx_busy_enabled,vmx_temp_enabled,vmx_play_instructions,vmx_option_0_number,vmx_option_1_number,vmx_option_2_number\n";
 
 
-        $csv .= "add,$account,,\"$account\",default,0,,,6567347766,,,,,,,,default,$account,pjsip,PJSIP/$account,fixed,$account,\"$account\",,,dontcare,dontcare,dontcare,dontcare,disabled,10,disabled,enabled,$account,3,,yes,,no,no,"$account <$account>",from-internal,,0,yes,,rfc4733,yes,no,$account@device,,1,1,1,7200,no,no,yes,60,auto,,,,60,yes,no,yes,$secret,yes,pai,chan_pjsip,yes,,yes,yes,,,,,,,,,,,,,ENABLED,ringallv2-prim,20,,$account,,\"ext-local,$account,dest\",,,,,Ring,7,default,,yes,default,,,yes,$account,adjolin@gmail.com,,attach=no|saycid=no|envelope=no|delete=no,no,no,,,,1,,,";
+        $csv .= "add,$account,,\"$account\",default,0,,,6567347766,,,,,,,,default,$account,pjsip,PJSIP/$account,fixed,$account,\"$account\",,,dontcare,dontcare,dontcare,dontcare,disabled,10,disabled,enabled,$account,3,,yes,,no,no,\"$account <$account>\",from-internal,,0,yes,,rfc4733,yes,no,$account@device,,1,1,1,7200,no,no,yes,60,auto,,,,60,yes,no,yes,$secret,yes,pai,chan_pjsip,yes,,yes,yes,,,,,,,,,,,,,ENABLED,ringallv2-prim,20,,$account,,\"ext-local,$account,dest\",,,,,Ring,7,default,,yes,default,,,yes,$account,adjolin@gmail.com,,attach=no|saycid=no|envelope=no|delete=no,no,no,,,,1,,,";
         Storage::put('extensions.csv',$csv);
         $connection = ssh2_connect('104.237.1.167', 22);
         if (ssh2_auth_password($connection, 'us4deliver', '0*6x7V6T?Z5hqQh')) {
