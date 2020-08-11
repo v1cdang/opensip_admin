@@ -32,7 +32,8 @@ class RoutesController extends Controller
     {
         $phone = new PhoneNumber('+'.$phonenumber);
         $countryPhone = $phone->getCountry();
-        echo $countryPhone;
+        $countryCode = DB::table('country_code')->select('code')->where(['alpha2'=>$countryPhone])->first();
+        echo $countryPhone."|".$countryCode->code;
     }
 
 }
