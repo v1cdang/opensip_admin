@@ -20,12 +20,17 @@ class RoutesController extends Controller
         $phone = new PhoneNumber('+'.$phonenumber);
         $countryPhone = $phone->getCountry();
         //echo $countryPhone;
-        $allowed_country = DB::table('customer_allowed_countries')->select('country')->where(['prefix' => $clientPrefix,'country' => $countryPhone])->first();
-        if (is_null($allowed_country)) {
-            echo "NOT ALLOWED";
-        } else {
+        if ($clientPrefix=='6000') {
             echo "ALLOWED";
+        } else {
+            $allowed_country = DB::table('customer_allowed_countries')->select('country')->where(['prefix' => $clientPrefix,'country' => $countryPhone])->first();
+            if (is_null($allowed_country)) {
+                echo "NOT ALLOWED";
+            } else {
+                echo "ALLOWED";
+            }
         }
+
     }
 
     public function getCountry(Request $request, $phonenumber)
