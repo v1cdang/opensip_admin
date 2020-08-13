@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class CalleridController extends Controller
 {
-    public function index($prefix, $phonenumber, $ipaddress)
+    public function index($prefix, $ipaddress)
     {
 
         $callerid = '';
