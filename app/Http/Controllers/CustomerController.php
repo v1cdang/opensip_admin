@@ -164,9 +164,31 @@ class CustomerController extends Controller
                 'direct_media' => 'yes',
                 'deny' => '0.0.0.0/0',
                 'permit' => '0.0.0.0/0',
-                'mailboxes' => '$account@default'
+                'mailboxes' => $account.'@default'
             ]
         );
+        $sippeers = DB::table('sippeers')->insert(
+            [
+                'name' => $account,
+                'host' => 'dynamic',
+                'type' => 'peer',
+                'context' => 'default',
+                'deny' => '0.0.0.0/0',
+                'permit' => '0.0.0.0/0',
+                'secret' => $secret,
+                'transport' => 'udp',
+                'disallow' => 'all',
+                'allow' => 'ulaw,alaw',
+                'directmedia' => 'nonat',
+                'language' => 'en',
+                'mailbox' => $account.'@default'
+            ]
+        );
+        if($sippeers) {
+            return redirect()->back()->withSuccess('Extension added');
+        } else {
+            // the query failed
+        }
 
     }
 }
