@@ -137,7 +137,7 @@ class CustomerController extends Controller
         $account = $request->input('extension');
         $callerid = $request->input('name')." <".$request->input('outboundcid').">";
         $secret = $request->input('secret');
-        $selectedPrefix = $request->input('selectedPrefix');
+        $selectedPrefix = $request->input('customerPrefix');
 
         DB::table('ps_aors')->insert(
             [
