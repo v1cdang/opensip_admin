@@ -173,18 +173,20 @@ class CustomerController extends Controller
         if (!$dialplan) {
             $extension = DB::table('extensions')->insert(
                 [
-                    'context' => 'default',
-                    'exten' => "_".$selectedPrefix."X.",
-                    'priority' => 1,
-                    'app' => 'Dial',
-                    'appdata' => 'SIP/${EXTEN}@us4telecoms,60,tor'
-                ],
-                [
-                    'context' => 'default',
-                    'exten' => "_".$selectedPrefix."X.",
-                    'priority' => 2,
-                    'app' => 'Hangup',
-                    'appdata' => ''
+                    [
+                        'context' => 'default',
+                        'exten' => "_".$selectedPrefix."X.",
+                        'priority' => 1,
+                        'app' => 'Dial',
+                        'appdata' => 'SIP/${EXTEN}@us4telecoms,60,tor'
+                    ],
+                    [
+                        'context' => 'default',
+                        'exten' => "_".$selectedPrefix."X.",
+                        'priority' => 2,
+                        'app' => 'Hangup',
+                        'appdata' => ''
+                    ]
                 ]
             );
         }
