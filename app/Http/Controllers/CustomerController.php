@@ -169,7 +169,7 @@ class CustomerController extends Controller
                 'mailboxes' => $account.'@default'
             ]
         );
-        $dialplan = DB::table('dialplan')->where(['exten' => "_".$selectedPrefix."X."])->first();
+        $dialplan = DB::table('extensions')->where(['exten' => "_".$selectedPrefix."X."])->first();
         if (!$dialplan) {
             $extension = DB::table('extensions')->insert(
                 [
