@@ -117,7 +117,8 @@ class CustomerController extends Controller
     public function addExtensionForm()
     {
         $password = $this->randomPassword();
-        return view('addExtension', ['newpassword' => $password]);
+        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        return view('addExtension', ['newpassword' => $password,'prefixes' => $prefixes]);
     }
 
     private function randomPassword() {
@@ -136,6 +137,7 @@ class CustomerController extends Controller
         $account = $request->input('extension');
         $callerid = $request->input('name')." <".$request->input('outboundcid').">";
         $secret = $request->input('secret');
+        $selectedPrefix = $request->input('selectedPrefix');
 
         DB::table('ps_aors')->insert(
             [
@@ -167,6 +169,25 @@ class CustomerController extends Controller
                 'mailboxes' => $account.'@default'
             ]
         );
+        $dialplan = DB::table('dialplan')->where(['exten' => "_".$selectedPrefix."X."])->first();
+        if (!$dialplan) {
+            $extension = DB::table('extensions')->insert(
+                [
+                    'context' => 'default',
+                    'exten' => "_".$selectedPrefix."X.",
+                    'priority' => 1,
+                    'app' => 'Dial',
+                    'appdata' => 'SIP/${EXTEN}@us4telecoms,60,tor'
+                ],
+                [
+                    'context' => 'default',
+                    'exten' => "_".$selectedPrefix."X.",
+                    'priority' => 2,
+                    'app' => 'Hangup',
+                    'appdata' => ''
+                ]
+            );
+        }
         $sippeers = DB::table('sippeers')->insert(
             [
                 'name' => $account,
@@ -181,6 +202,7 @@ class CustomerController extends Controller
                 'allow' => 'ulaw,alaw',
                 'directmedia' => 'nonat',
                 'language' => 'en',
+                'accountcode' => $selectedPrefix,
                 'mailbox' => $account.'@default'
             ]
         );
