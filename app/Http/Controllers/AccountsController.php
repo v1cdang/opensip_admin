@@ -8,18 +8,26 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountsController extends Controller
 {
+    private function getAllPrefixes()
+    {
+        $prefixes = DB::table('cc_card')->select('prefix')
+                    ->orderBy('prefix','asc')
+                    ->get();
+        return $prefixes;
+    }
+
     public function index()
     {
         if (!Auth::check()) {
             return route('login');
         }
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
 
         return view('addCredit', ['prefixes' => $prefixes]);
     }
     public function addCreditForm($prefix)
     {
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
         return view('addCreditForm', ['selectedPrefix' => $prefix, 'prefixes' => $prefixes]);
     }
     public function updateCredit(Request $request)

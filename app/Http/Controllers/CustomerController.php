@@ -10,12 +10,19 @@ use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
+    private function getAllPrefixes()
+    {
+        $prefixes = DB::table('cc_card')->select('prefix')
+                    ->orderBy('prefix','asc')
+                    ->get();
+        return $prefixes;
+    }
     public function index()
     {
         if (!Auth::check()) {
             return route('login');
         }
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
 
         return view('customerAllowedCountriesForm', ['prefixes' => $prefixes]);
     }
@@ -71,7 +78,7 @@ class CustomerController extends Controller
 
     public function showAllowedCountriesForm($prefix)
     {
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
         $countries = DB::table('country_code')->select('country_name','alpha2')->get();
         return view('customerAllowedCountriesForm', ['selectedPrefix' => $prefix,'prefixes' => $prefixes, 'countries' => $countries]);
     }
@@ -94,7 +101,7 @@ class CustomerController extends Controller
 
     public function setCustomerRatesForm()
     {
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
 
         return view('setCustomerRatesForm', ['prefixes' => $prefixes]);
     }
@@ -117,7 +124,7 @@ class CustomerController extends Controller
     public function addExtensionForm()
     {
         $password = $this->randomPassword();
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
         return view('addExtension', ['newpassword' => $password,'prefixes' => $prefixes]);
     }
 
@@ -143,7 +150,7 @@ class CustomerController extends Controller
 
     public function addDID()
     {
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
         return view('addDID', ['prefixes' => $prefixes]);
     }
     public function addDIDtoExt(Request $request)

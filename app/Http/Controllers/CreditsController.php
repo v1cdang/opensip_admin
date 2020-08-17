@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\DB;
 
 class CreditsController extends Controller
 {
+    private function getAllPrefixes()
+    {
+        $prefixes = DB::table('cc_card')->select('prefix')
+                    ->orderBy('prefix','asc')
+                    ->get();
+        return $prefixes;
+    }
     public function index()
     {
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
 
         return view('creditHistory', ['prefixes' => $prefixes]);
     }
@@ -17,7 +24,7 @@ class CreditsController extends Controller
     public function viewPrefixCreditHistory($prefix)
     {
         DB::enableQueryLog();
-        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        $prefixes = $this->getAllPrefixes();
         $credit_history = DB::table('account_credit_history')->where('prefix',$prefix)->get();
 //      $query = DB::getQueryLog();
 
