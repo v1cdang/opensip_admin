@@ -176,6 +176,11 @@ class CustomerController extends Controller
                 ],
             ]
         );
+        if($extension) {
+            return redirect()->back()->withSuccess('DID Added');
+        } else {
+            // the query failed
+        }
     }
 
     public function addExtension(Request $request)
