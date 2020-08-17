@@ -36,6 +36,7 @@ Route::post('addCustomer', 'CustomerController@addCustomer');
 Route::get('setCustomerRatesForm', 'CustomerController@setCustomerRatesForm');
 Route::post('setCustomerRates', 'CustomerController@setCustomerRates');
 Route::get('getChildExtension/{prefix}', 'CustomerController@getChildExtension');
+Route::get('getCustomerDID/{prefix}', 'CustomerController@getCustomerDID');
 
 Route::get('addDID','CustomerController@addDID');
 Route::post('addDIDtoExt','CustomerController@addDIDtoExt');

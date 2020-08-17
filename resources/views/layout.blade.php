@@ -103,6 +103,23 @@
                         })
                     }
                 });
+                var urlg = "/getCustomerDID/"+ $(this).val();
+                jQuery.ajax({
+
+                    url: urlg,
+                    method: 'get',
+                    success: function(result) {
+                        var DIDs = result.split("|");
+
+                        jQuery.each(DIDs, function(key, DID){
+                            console.log(DID);
+                            $('#DID').append($('<option>', {
+                                value: DID,
+                                text: DID
+                            }));
+                        })
+                    }
+                });
             });
         });
 </script>

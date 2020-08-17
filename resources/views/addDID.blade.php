@@ -18,7 +18,11 @@
 
         </select><br>
         <label class="description" for="DID">Enter DID</label>
-        <input type="text" name="DID" class="form-control" onkeypress="return onlyNumberKey(event)" id="DID" size="12" tabindex="" value="">
+        <select name="DID" id="DID">
+            <option value="">Choose Inbound DID</option>
+
+        </select>
+
 
         <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit">
 

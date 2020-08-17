@@ -148,6 +148,17 @@ class CustomerController extends Controller
         echo rtrim($strC, "|");
     }
 
+    public function getCustomerDID(Request $request, $prefix)
+    {
+        $strC = '';
+        $DIDs = DB::table('o2b_inbound')->select('DID')->where(['account'=> $prefix])->get();
+        foreach($DIDs as $DID) {
+            $strC .= $DID->DID."|";
+        }
+        echo rtrim($strC, "|");
+    }
+
+
     public function addDID()
     {
         $prefixes = $this->getAllPrefixes();
