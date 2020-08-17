@@ -132,6 +132,45 @@ class CustomerController extends Controller
         return implode($pass); //turn the array into a string
     }
 
+    public function getChildExtension(Request $request, $prefix) {
+        $strC = '';
+        $childPrefixes = DB::table('sippeers')->select('name')->where(['accountcode'=> $prefix])->get();
+        foreach($childPrefixes as $childPrefix) {
+            $strC .= $childPrefix->name."|";
+        }
+        echo rtrim($strC, "|");
+    }
+
+    public function addDID()
+    {
+        $prefixes = DB::table('cc_card')->select('prefix')->get();
+        return view('addDID', ['prefixes' => $prefixes]);
+    }
+    public function addDIDtoExt(Request $request)
+    {
+        $parentPrefix = $request->input('customerPrefix');
+        $dest = $request->input('destinationExt');
+        $did = $request->input('DID');
+        $extension = DB::table('extensions')->insert(
+            [
+                [
+                'context' => 'default',
+                'exten' => $did,
+                'priority' => 1,
+                'app' => 'Dial',
+                'appdata' => "SIP/$dest,60,tor"
+                ],
+                [
+                    'context' => 'default',
+                    'exten' => $did,
+                    'priority' => 2,
+                    'app' => 'Hangup',
+                    'appdata' => ''
+                ],
+            ]
+        );
+    }
+
     public function addExtension(Request $request)
     {
         $account = $request->input('extension');

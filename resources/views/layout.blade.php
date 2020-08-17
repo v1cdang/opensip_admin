@@ -73,6 +73,39 @@
             text-align: center;
             }
      </style>
+     <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+     crossorigin="anonymous">
+</script>
+<script>
+        jQuery(document).ready(function(){
+            $('#customerPrefix').on('change', function (e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                var urlg = "/getChildExtension/"+ $(this).val();
+                jQuery.ajax({
+
+                    url: urlg,
+                    method: 'get',
+                    success: function(result) {
+                        var extensions = result.split("|");
+
+                        jQuery.each(extensions, function(key, extension){
+                            console.log(extension);
+                            $('#destinationExt').append($('<option>', {
+                                value: extension,
+                                text: extension
+                            }));
+                        })
+                    }
+                });
+            });
+        });
+</script>
 </head>
 
 <body>
