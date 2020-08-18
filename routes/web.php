@@ -44,6 +44,8 @@ Route::post('addDIDtoExt','CustomerController@addDIDtoExt');
 Route::get('addExtensionsForm', 'CustomerController@addExtensionForm');
 Route::post('addExtension', 'CustomerController@addExtension');
 
+Route::get('getCurrentClientSummary', 'ReportsController@getCurrentClientSummary');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
