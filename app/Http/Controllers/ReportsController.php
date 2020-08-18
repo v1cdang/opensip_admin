@@ -11,7 +11,7 @@ class ReportsController extends Controller
     {
         $dateNow = date("Y-m-d");
 
-        $okCalls = DB::select("SELECT clientPrefix as PREFIX, count(*) as TOTAL, sum(duration) as DURATION, SUM(customerCallCost) as `customerCallCost`, AVG(customerCost) as `avgcustomerCost`, SUM(vendorCallCost) as `vendorCallCost`, AVG(carrierCost) as `avgcarrierCost`, carrierid FROM `acc` where time BETWEEN '? 00:00:00' AND NOW() and to_tag!='' and clientPrefix!='' and carrierid!='' and sip_code='200' group by clientPrefix, carrierid", [$dateNow]);
+        $okCalls = DB::select("SELECT clientPrefix as PREFIX, count(distinct callid) as TOTAL, carrierid, sip_code, sip_reason FROM `acc` where time BETWEEN DATE_SUB(NOW(),INTERVAL 2 HOUR)  AND NOW() and to_tag!='' and clientPrefix!='' and carrierid!='' group by clientPrefix, sip_code, carrierid");
    // dd($okCalls);
         return view('reports',['okCalls' => $okCalls]);
     }
