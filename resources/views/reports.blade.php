@@ -5,6 +5,7 @@
     <div>
         View Current Summary
             <table>
+                {{ dd($okCalls) }}
                 <tr><td colspan="5"><h3>Start time for this query is: {{ $okCalls[0]->date_start }}</h3></td></tr>
                 <tr><td>PREFIX</td><td>TOTAL</td><td>carrierid</td><td>SIP Code</td><td>Sip Reason</td></tr>
 
