@@ -15,7 +15,7 @@
 @if ( $selectedPrefix)
 <form action="/setAllowedCountriesSubmit" method="POST">
     @csrf
-    @isset($var)
+    @isset($selectedPrefix)
     <div class="form_description">
         <input type="hidden" name="selectedPrefix" value="{{ $selectedPrefix }}" />
     </div>
