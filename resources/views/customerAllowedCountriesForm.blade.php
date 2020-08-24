@@ -12,14 +12,14 @@
 
 </div>
 
-@if ( $selectedPrefix)
+@isset($selectedPrefix)
 <form action="/setAllowedCountriesSubmit" method="POST">
     @csrf
-    @isset($selectedPrefix)
+
     <div class="form_description">
         <input type="hidden" name="selectedPrefix" value="{{ $selectedPrefix }}" />
     </div>
-    @endisset
+
         <label class="description" for="element_1">Select Allowed Countries</label>
             <div>
                 <select name="countries[]" id="countries" multiple>
@@ -30,7 +30,7 @@
             </div>
             <input id="saveForm" class="button_text" type="submit" name="submit" value="Submit">
 </form>
-@endif
+@endisset
 
 @if(session('success'))
 <h3>{{session('success')}}</h3>
