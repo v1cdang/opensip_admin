@@ -15,9 +15,11 @@
 @if ( $selectedPrefix)
 <form action="/setAllowedCountriesSubmit" method="POST">
     @csrf
+    @isset($var)
     <div class="form_description">
         <input type="hidden" name="selectedPrefix" value="{{ $selectedPrefix }}" />
     </div>
+    @endisset
         <label class="description" for="element_1">Select Allowed Countries</label>
             <div>
                 <select name="countries[]" id="countries" multiple>
