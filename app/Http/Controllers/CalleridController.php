@@ -190,4 +190,17 @@ class CalleridController extends Controller
             }
        // }
     }
+
+    public function getAllowedCallerId($prefix, $callerid)
+    {
+        $allowedcallerid = DB::table('customer_allowed_callerid')->select('callerid')->where([
+            'prefix' => $prefix,
+            'callerid' => $callerid
+            ])->first();
+        if (is_null($allowedcallerid)) {
+            echo "NO";
+        } else {
+            echo "YES";
+        }
+    }
 }
