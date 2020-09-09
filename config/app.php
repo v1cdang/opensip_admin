@@ -229,5 +229,13 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'db_fields' => [
+        'dialed_number',
+        'callerid',
+        'duration',
+        'calldate',
+        'rate',
+        'total_cost'
+    ],
 
 ];

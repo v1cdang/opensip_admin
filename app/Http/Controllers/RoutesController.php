@@ -23,11 +23,25 @@ class RoutesController extends Controller
         if ($clientPrefix=='6000') {
             echo "ALLOWED";
         } else {
+
             $allowed_country = DB::table('customer_allowed_countries')->select('country')->where(['prefix' => $clientPrefix,'country' => $countryPhone])->first();
             if (is_null($allowed_country)) {
                 echo "NOT ALLOWED";
             } else {
-                echo "ALLOWED";
+                if ($clientPrefix=='8308') {
+                    if ($allowed_country=='CH') {
+                        if (substr($phonenumber,0,3)=="417") {
+                            echo "NOT ALLOWED";
+                        } else {
+                            echo "ALLOWED";
+                        }
+                    } else {
+                        echo "ALLOWED";
+                    }
+                } else {
+                    echo "ALLOWED";
+                }
+
             }
         }
 
