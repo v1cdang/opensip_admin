@@ -26,18 +26,8 @@ class ImportController extends Controller
         $tempPath = addslashes($file->getRealPath());
         $fileSize = $file->getSize();
         $mimeType = $file->getMimeType();
+        $path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
 
-            echo $tempPath;
-        //$data = array_map('str_getcsv', file($path));
-
-        $query = "LOAD DATA LOCAL INFILE '$tempPath'
-        INTO TABLE dawz_cdr FIELDS TERMINATED BY ','
-        LINES TERMINATED BY '\\n'";
-
-
-        $pdo = DB::connection()->getPdo();
-        $recordsCount = $pdo->exec($query);
-        echo $recordsCount;
 
     }
 
