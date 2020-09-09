@@ -17,12 +17,28 @@ class ImportController extends Controller
 
     public function parseImport(CsvImportRequest $request)
     {
-        $path = $request->file('csv_file')->getRealPath();
-        $data = array_map('str_getcsv', file($path));
-        $query = "LOAD DATA LOCAL INFILE '$path'
+        $file = $request->file('csv_file');
+
+        DB::connection()->disableQueryLog();
+        // File Details
+        $filename = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $tempPath = addslashes($file->getRealPath());
+        $fileSize = $file->getSize();
+        $mimeType = $file->getMimeType();
+
+            echo $tempPath;
+        //$data = array_map('str_getcsv', file($path));
+
+        $query = "LOAD DATA LOCAL INFILE '$tempPath'
         INTO TABLE dawz_cdr FIELDS TERMINATED BY ','
-        LINES TERMINATED BY '\r\n'
-        IGNORE 1 LINES;";
+        LINES TERMINATED BY '\\n'";
+
+
+        $pdo = DB::connection()->getPdo();
+        $recordsCount = $pdo->exec($query);
+        echo $recordsCount;
+
     }
 
     public function processImport(Request $request)
