@@ -27,7 +27,8 @@ class ImportController extends Controller
         $tempPath = addslashes($file->getRealPath());
         $fileSize = $file->getSize();
         $mimeType = $file->getMimeType();
-        $path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
+        //$path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
+        rename($tempPath, '/var/lib/mysql-files/'.$filename);
 
 
     }
