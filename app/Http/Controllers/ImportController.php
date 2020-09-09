@@ -28,8 +28,8 @@ class ImportController extends Controller
         $fileSize = $file->getSize();
         $mimeType = $file->getMimeType();
         //$path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
-        rename($tempPath, '/var/lib/mysql-files/'.$filename);
-        $query = "LOAD DATA INFILE '/var/lib/mysql-files/$filename'
+        rename($tempPath, '/tmp/'.$filename);
+        $query = "LOAD DATA INFILE '/tmp/$filename'
         INTO TABLE dawz_cdr
         FIELDS TERMINATED BY ','
         LINES TERMINATED BY '\n';";
