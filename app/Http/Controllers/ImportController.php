@@ -23,7 +23,6 @@ class ImportController extends Controller
             'csv_header' => $request->has('header'),
             'csv_data' => json_encode($data)
         ]);
-        dd($csv_data_file);
 
         $csv_data = array_slice($data, 0, 2);
         return view('import_fields', compact('csv_data', 'csv_data_file'));
