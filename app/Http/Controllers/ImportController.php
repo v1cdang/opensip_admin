@@ -29,7 +29,11 @@ class ImportController extends Controller
         $mimeType = $file->getMimeType();
         //$path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
         rename($tempPath, '/var/lib/mysql-files/'.$filename);
-
+        $query = "LOAD DATA INFILE '$filename'
+        INTO TABLE dadwz_cdr
+        FIELDS TERMINATED BY ','
+        LINES TERMINATED BY '\n';";
+        DB::connection()->getpdo()->exec($query);
 
     }
 
