@@ -32,7 +32,8 @@ class ImportController extends Controller
 
         $query = "LOAD DATA LOCAL INFILE '$tempPath'
         INTO TABLE dawz_cdr FIELDS TERMINATED BY ','
-        LINES TERMINATED BY '\r'
+        LINES TERMINATED BY '\r\n'
+        (switch,destination,dialed,lrn,ani,jurisdiction,seized_time,start_time,stop_time,duration,duration_ms,sipcause,account_in,ip_in,tech_in,duration_billed,rate,total_charge,sip_call_id)
         ";
 
 
