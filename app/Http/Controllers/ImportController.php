@@ -32,11 +32,17 @@ class ImportController extends Controller
     {
         $data = CsvData::find($request->csv_data_file_id);
         $csv_data = json_decode($data->csv_data, true);
+        $db_fields = config('app.db_fields');
         foreach ($csv_data as $row) {
-            $contact = new DawzCDRs();
-            foreach (config('app.db_fields') as $index => $field) {
-                $contact->$field = $row[$request->fields[$index]];
+            $contact = new Dawzcdrs();
+           // print_r($row);
+            foreach($request->fields as $index => $value) {
+                if (!is_null($value)) {
+                    $field = $db_fields[$value];
+                    $contact->$field = $row[$index];
+                }
             }
+
             $contact->save();
         }
 

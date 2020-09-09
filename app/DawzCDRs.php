@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DawzCDRs extends Model
+class Dawzcdrs extends Model
 {
     public $fillable = ['dialed_number',
     'callerid',

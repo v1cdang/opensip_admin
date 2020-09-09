@@ -17,6 +17,7 @@
             @foreach ($csv_data[0] as $key => $value)
                 <td>
                     <select name="fields[{{ $key }}]">
+                        <option value=""></option>
                         @foreach (config('app.db_fields') as $db_field)
                             <option value="{{ $loop->index }}">{{ $db_field }}</option>
                         @endforeach
