@@ -31,8 +31,8 @@ class ImportController extends Controller
         //$data = array_map('str_getcsv', file($path));
 
         $query = "LOAD DATA LOCAL INFILE '$tempPath'
-        INTO TABLE dawz_cdr FIELDS TERMINATED BY ','
-        LINES TERMINATED BY '\\n'";
+        INTO TABLE dawz_cdr FIELDS TERMINATED BY ','";
+
 
 
         $pdo = DB::connection()->getPdo();
