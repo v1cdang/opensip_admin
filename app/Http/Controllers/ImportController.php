@@ -30,7 +30,7 @@ class ImportController extends Controller
         //$path = Storage::putFile('/var/lib/mysql-files/'.$filename.".".$extension, $request->file('csv_file'));
         rename($tempPath, '/var/lib/mysql-files/'.$filename);
         $query = "LOAD DATA INFILE '$filename'
-        INTO TABLE dadwz_cdr
+        INTO TABLE dawz_cdr
         FIELDS TERMINATED BY ','
         LINES TERMINATED BY '\n';";
         DB::connection()->getpdo()->exec($query);
