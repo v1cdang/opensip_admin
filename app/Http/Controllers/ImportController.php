@@ -10,16 +10,30 @@ use App\DawzCDRs;
 
 class ImportController extends Controller
 {
+    private function getAllCarriers()
+    {
+        $carriers = DB::table('o2b_carriers')->select('carrierid')
+                    ->orderBy('carrierid','asc')
+                    ->get();
+        return $carriers;
+    }
     public function getImport()
     {
-        return view('import');
+        $carriers = $this->getAllCarriers();
+        $db_fields = config('app.db_fields');
+
+        return view('import', ['carriers' => $carriers]);
     }
 
     public function parseImport(CsvImportRequest $request)
     {
         $file = $request->file('csv_file');
+        $carrierid = $request->input('carrierSelect');
+        $db_fields = config('app.db_fields');
+        $columns = $db_fields[$carrierid];
 
         DB::connection()->disableQueryLog();
+        $pdo = DB::connection()->getPdo();
         // File Details
         $filename = $file->getClientOriginalName();
         $extension = $file->getClientOriginalExtension();
@@ -27,18 +41,21 @@ class ImportController extends Controller
         $fileSize = $file->getSize();
         $mimeType = $file->getMimeType();
 
-            echo $tempPath;
+            //echo $tempPath;
+
         //$data = array_map('str_getcsv', file($path));
+        $query = "TRUNCATE ".$carrierid."_cdr";
+        $pdo->exec($query);
 
         $query = "LOAD DATA LOCAL INFILE '$tempPath'
-        INTO TABLE dawz_cdr FIELDS TERMINATED BY ','
+        INTO TABLE ".$carrierid."_cdr FIELDS TERMINATED BY ','
         LINES TERMINATED BY '\r\n'
-        (switch,destination,dialed,lrn,ani,jurisdiction,seized_time,start_time,stop_time,duration,duration_ms,sipcause,account_in,ip_in,tech_in,duration_billed,rate,total_charge,sip_call_id)
+        ($columns)
         ";
 
 
 
-        $pdo = DB::connection()->getPdo();
+
         $recordsCount = $pdo->exec($query);
         echo $recordsCount;
 

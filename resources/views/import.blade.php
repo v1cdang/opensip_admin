@@ -9,8 +9,19 @@
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('import_parse') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}
-
+                            <div class="form-group">
+                                <label for="carrierSelect" class="col-md-4 control-label">Choose carrier</label>
+                                <div class="col-md-6">
+                                    <select name="carrierSelect" id="carrierSelect">
+                                        @foreach ($carriers as $carrier):
+                                        <option value="{{ $carrier->carrierid }}">{{ $carrier->carrierid }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group{{ $errors->has('csv_file') ? ' has-error' : '' }}">
+
+
                                 <label for="csv_file" class="col-md-4 control-label">CSV file to import</label>
 
                                 <div class="col-md-6">
