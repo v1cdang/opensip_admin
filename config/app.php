@@ -232,7 +232,7 @@ return [
     'db_fields' => [
         'dawz' => 'switch,destination,dialed,lrn,ani,jurisdiction,seized_time,start_time,stop_time,duration,duration_ms,sipcause,account_in,ip_in,tech_in,duration_billed,rate,total_charge,sip_call_id',
         'gtps' => 'prefix,phone,callerid,country,calldate,duration,sipcode,rate,callcost,srcip,direction',
-        'voicehub' => 'calldate,callid,phone,code,country,description,duration,rate,cost,currency',
+        'voicehub' => 'calldate,callerid,phone,code,country,description,duration,rate,cost,currency',
     ],
 
 ];
