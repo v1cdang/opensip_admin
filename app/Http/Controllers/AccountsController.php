@@ -34,7 +34,7 @@ class AccountsController extends Controller
     {
         DB::enableQueryLog();
         $selectedPrefix = $request->input('selectedPrefix');
-        $credit_amount =  (int) $request->input('credit_amount');
+        $credit_amount =  floatval($request->input('credit_amount'));
 
         $previous_balance = DB::table('cc_card')->select('credit')->where('prefix', $selectedPrefix)->first();
 
